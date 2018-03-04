@@ -1,9 +1,12 @@
 package com.jms.rabbitmq.projects;
 
+import com.jms.rabbitmq.events.Event;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter @Setter
@@ -17,7 +20,7 @@ public class Project {
     private String url;
 
     @ManyToOne
-    private User user;
+    private User author;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -27,7 +30,19 @@ public class Project {
     )
     private List<User> stars;
 
+    @Transient
+    private List<Event> events = new ArrayList<>();
+
     public void addStarBy(User user) {
         stars.add(user);
+        recordThat(new ProjectWasStarred(name, user.getUsername(), user.getEmail(), new Date()));
+    }
+
+    private void recordThat(Event projectWasStarred) {
+        events.add(projectWasStarred);
+    }
+
+    private Iterable<Event> events() {
+        return events;
     }
 }

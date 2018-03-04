@@ -15,7 +15,7 @@ public class User {
     private String password;
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "author")
     List<Project> projects;
 
     @ManyToMany(mappedBy = "stars")
@@ -41,5 +41,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

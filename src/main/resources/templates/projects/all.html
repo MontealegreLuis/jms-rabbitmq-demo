@@ -15,7 +15,7 @@
             <div class="card">
                 <h5 class="card-header" th:text="${project.name}">Name</h5>
                 <div class="card-body">
-                    <h6 class="card-title" th:text="${project.user.username}">
+                    <h6 class="card-title" th:text="${project.author.username}">
                         User</h6>
                     <p class="card-text" th:text="${project.description}">Description</p>
                     <p class="card-text text-muted" th:text="${'Stars count ' + project.stars.size()}">
