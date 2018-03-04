@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('View all projects')">
+</head>
+<body>
+<div th:replace="fragments/header :: navbar"></div>
+<div class="container">
+    <h1>Projects</h1>
+    <div class="row">
+        <div class="col-sm-12 col-md-4" th:each="project : ${projects}">
+            <div class="card">
+                <h5 class="card-header" th:text="${project.name}">Name</h5>
+                <div class="card-body">
+                    <h6 class="card-title" th:text="${project.user.username}">
+                        User</h6>
+                    <p class="card-text text-muted" th:text="${project.description}">Description</p>
+                    <a href="/" class="card-link">
+                        <i class="fa fa-star"></i>
+                        Star
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

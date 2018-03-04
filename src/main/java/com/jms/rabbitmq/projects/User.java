@@ -3,20 +3,20 @@ package com.jms.rabbitmq.projects;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter @Setter
-@Entity
-@Table(name = "users")
+@Entity @Table(name = "users")
 public class User {
     @Id @GeneratedValue
     private Long id;
     private String username;
     private String password;
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    List<Project> projects;
 
     public User(User user) {
         id = user.id;
