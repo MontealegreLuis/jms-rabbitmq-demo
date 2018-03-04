@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 /* Pages that require authentication */
                 .authorizeRequests()
                 .antMatchers(
-                    "/projects/create"
+                    "/star/{id}"
                 )
                 .authenticated()
         ;

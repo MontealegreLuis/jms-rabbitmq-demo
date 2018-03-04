@@ -18,6 +18,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Project> projects;
 
+    @ManyToMany(mappedBy = "stars")
+    List<Project> starred;
+
     public User(User user) {
         id = user.id;
         username = user.username;
