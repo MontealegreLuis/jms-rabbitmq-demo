@@ -29,6 +29,6 @@ public class SignUpController {
     public String singUpNewUser(@ModelAttribute User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         users.save(user);
-        return "redirect:/";
+        return "redirect:/login";
     }
 }
