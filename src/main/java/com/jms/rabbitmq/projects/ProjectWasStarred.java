@@ -1,9 +1,11 @@
 package com.jms.rabbitmq.projects;
 
 import com.jms.rabbitmq.events.Event;
+import lombok.Getter;
 
 import java.util.Date;
 
+@Getter
 public class ProjectWasStarred implements Event {
     private String project;
     private String starredByUsername;

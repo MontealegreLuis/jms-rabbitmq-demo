@@ -1,5 +1,6 @@
 package com.jms.rabbitmq.projects;
 
+import com.jms.rabbitmq.events.CanRecordEvents;
 import com.jms.rabbitmq.events.Event;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Getter @Setter
 @Entity @Table(name = "projects")
-public class Project {
+public class Project implements CanRecordEvents {
     @Id @GeneratedValue
     private Long id;
 
@@ -38,11 +39,11 @@ public class Project {
         recordThat(new ProjectWasStarred(name, user.getUsername(), user.getEmail(), new Date()));
     }
 
-    private void recordThat(Event projectWasStarred) {
+    public void recordThat(Event projectWasStarred) {
         events.add(projectWasStarred);
     }
 
-    private Iterable<Event> events() {
+    public Iterable<Event> events() {
         return events;
     }
 }

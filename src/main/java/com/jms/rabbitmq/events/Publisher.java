@@ -1,0 +1,42 @@
+package com.jms.rabbitmq.events;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
+import org.springframework.stereotype.Service;
+
+import javax.jms.Session;
+import java.io.Serializable;
+
+@Service
+public class Publisher {
+    private JmsTemplate publisher;
+
+    public Publisher(JmsTemplate publisher) {
+        this.publisher = publisher;
+    }
+
+    public void publish(Iterable<Event> events) {
+        for (Event event : events) {
+            publishEvent(event);
+        }
+    }
+
+    private void publishEvent(Event event) {
+        MessageCreator messageCreator = (Session session) -> {
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
+            Serializable message;
+            try {
+                message = writer.writeValueAsString(event);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            return session.createObjectMessage(message);
+        };
+
+        publisher.send("project-stars-channel", messageCreator);
+    }
+}

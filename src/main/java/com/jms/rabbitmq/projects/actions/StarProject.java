@@ -1,5 +1,6 @@
 package com.jms.rabbitmq.projects.actions;
 
+import com.jms.rabbitmq.events.Publisher;
 import com.jms.rabbitmq.projects.Project;
 import com.jms.rabbitmq.projects.Projects;
 import com.jms.rabbitmq.projects.UnknownProject;
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class StarProject {
     private Projects projects;
     private SecurityService security;
+    private Publisher publisher;
 
-    public StarProject(Projects projects, SecurityService security) {
+    public StarProject(Projects projects, SecurityService security, Publisher publisher) {
         this.projects = projects;
         this.security = security;
+        this.publisher = publisher;
     }
 
     public void addStarToProjectWith(Long id) {
@@ -27,5 +30,7 @@ public class StarProject {
 
         project.addStarBy(security.loggedInUser());
         projects.save(project);
+
+        publisher.publish(project.events());
     }
 }
