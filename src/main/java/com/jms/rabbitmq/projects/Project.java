@@ -36,7 +36,7 @@ public class Project implements CanRecordEvents {
 
     public void addStarBy(User user) {
         stars.add(user);
-        recordThat(new ProjectWasStarred(name, user.getUsername(), user.getEmail(), new Date()));
+        recordThat(new ProjectWasStarred(name, user.getUsername(), author.getEmail(), new Date()));
     }
 
     public void recordThat(Event projectWasStarred) {
