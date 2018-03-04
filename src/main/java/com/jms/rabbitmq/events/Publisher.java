@@ -3,6 +3,7 @@ package com.jms.rabbitmq.events;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ import java.io.Serializable;
 
 @Service
 public class Publisher {
+    @Value("${projects.messaging.topic}")
+    private String topic;
+
     private JmsTemplate publisher;
 
     public Publisher(JmsTemplate publisher) {
@@ -37,6 +41,6 @@ public class Publisher {
             return session.createObjectMessage(message);
         };
 
-        publisher.send("project-stars-channel", messageCreator);
+        publisher.send(topic, messageCreator);
     }
 }

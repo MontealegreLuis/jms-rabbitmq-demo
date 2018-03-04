@@ -2,6 +2,7 @@ package com.jms.rabbitmq;
 
 import com.jms.rabbitmq.messaging.Consumer;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,9 @@ import javax.jms.ConnectionFactory;
 
 @SpringBootApplication
 public class RabbitmqApplication {
+    @Value("${projects.messaging.topic}")
+    private String topic;
+
 	public static void main(String[] args) {
 		SpringApplication.run(RabbitmqApplication.class, args);
 	}
@@ -26,7 +30,7 @@ public class RabbitmqApplication {
 
 		DefaultMessageListenerContainer jmsListener = new DefaultMessageListenerContainer();
 		jmsListener.setConnectionFactory(connectionFactory);
-		jmsListener.setDestinationName("project-stars-channel");
+		jmsListener.setDestinationName(topic);
 		jmsListener.setPubSubDomain(false);
 
 		MessageListenerAdapter adapter = new MessageListenerAdapter(new Consumer());
