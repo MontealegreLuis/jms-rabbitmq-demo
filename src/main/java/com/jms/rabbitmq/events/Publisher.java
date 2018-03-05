@@ -23,9 +23,7 @@ public class Publisher {
     }
 
     public void publish(Iterable<Event> events) {
-        for (Event event : events) {
-            publishEvent(event);
-        }
+        for (Event event : events) publishEvent(event);
     }
 
     private void publishEvent(Event event) {
