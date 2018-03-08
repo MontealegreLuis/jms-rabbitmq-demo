@@ -1,20 +1,21 @@
 package com.jms.rabbitmq.projects;
 
 import com.jms.rabbitmq.events.Event;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
+@Setter @NoArgsConstructor
 public class ProjectWasStarred implements Event {
     private String project;
-    private String starredByUsername;
+    private String stargazer;
     private String authorEmail;
     private Date occurredOn;
 
-    public ProjectWasStarred(String project, String starredByUsername, String authorEmail, Date occurredOn) {
+    public ProjectWasStarred(String project, String stargazer, String authorEmail, Date occurredOn) {
         this.project = project;
-        this.starredByUsername = starredByUsername;
+        this.stargazer = stargazer;
         this.authorEmail = authorEmail;
         this.occurredOn = occurredOn;
     }
@@ -22,5 +23,17 @@ public class ProjectWasStarred implements Event {
     @Override
     public Date occurredOn() {
         return occurredOn;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public String getStargazer() {
+        return stargazer;
     }
 }

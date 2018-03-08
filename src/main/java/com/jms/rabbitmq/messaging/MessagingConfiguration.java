@@ -14,6 +14,12 @@ public class MessagingConfiguration {
     @Value("${projects.messaging.topic}")
     private String topic;
 
+    private NewStarEmailNotification notification;
+
+    public MessagingConfiguration(NewStarEmailNotification notification) {
+        this.notification = notification;
+    }
+
     @Bean
     public ConnectionFactory connectionFactory() {
         return new RMQConnectionFactory();
@@ -27,7 +33,7 @@ public class MessagingConfiguration {
         jmsListener.setDestinationName(topic);
         jmsListener.setPubSubDomain(false);
 
-        MessageListenerAdapter adapter = new MessageListenerAdapter(new Consumer());
+        MessageListenerAdapter adapter = new MessageListenerAdapter(notification);
         adapter.setDefaultListenerMethod("receive");
 
         jmsListener.setMessageListener(adapter);
